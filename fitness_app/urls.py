@@ -1,5 +1,14 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
+from fitness_app.views.auth import UserRegisterView
+from fitness_app.views.auth import *
+from fitness_app.views.challenges import *
+from fitness_app.views.media import *
+from fitness_app.views.nutrition import *
+from fitness_app.views.social import *
+from fitness_app.views.users import *
+from fitness_app.views.workouts import *
+
 from .views import (
     # Authentication
     UserRegisterView, CustomTokenObtainPairView, UserProfileView,
@@ -35,7 +44,7 @@ from .views import (
     MediaStorageView,
     
     # Activity
-    DailyActivityListView, DailyActivityDetailView
+#    DailyActivityListView, DailyActivityDetailView
 )
 
 urlpatterns = [
@@ -106,6 +115,6 @@ urlpatterns = [
     path('media/storage/', MediaStorageView.as_view(), name='media-storage'),
     
     # ==================== Activity Tracking ====================
-    path('activity/daily/', DailyActivityListView.as_view(), name='daily-activity-list'),
-    path('activity/daily/<int:pk>/', DailyActivityDetailView.as_view(), name='daily-activity-detail'),
+    #path('activity/daily/', DailyActivityListView.as_view(), name='daily-activity-list'),
+    #path('activity/daily/<int:pk>/', DailyActivityDetailView.as_view(), name='daily-activity-detail'),
 ]

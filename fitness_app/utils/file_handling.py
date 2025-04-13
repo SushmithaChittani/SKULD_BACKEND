@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 import os
 import uuid
+from django.conf import settings
 
 def validate_image_extension(value):
     ext = os.path.splitext(value.name)[1]
@@ -30,3 +31,10 @@ def validate_video_size(file):
     max_size = 50 * 1024 * 1024  # 50 MB
     if file.size > max_size:
         raise ValidationError("Video file too large ( > 50MB ).")
+
+def delete_old_file(file_field):
+    """ Deletes old file from storage when replaced """
+    if file_field and hasattr(file_field, 'path'):
+        if os.path.isfile(file_field.path):
+            os.remove(file_field.path)
+

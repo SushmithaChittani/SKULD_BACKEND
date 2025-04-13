@@ -37,12 +37,12 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/auth/', include('fitness_app.urls.auth')),
-    path('api/users/', include('fitness_app.urls.users')),
-    path('api/workouts/', include('fitness_app.urls.workouts')),
-    path('api/nutrition/', include('fitness_app.urls.nutrition')),
-    path('api/social/', include('fitness_app.urls.social')),
-    path('api/challenges/', include('fitness_app.urls.challenges')),
+    path('api/auth/', include('fitness_app.urls')),
+    path('api/users/', include('fitness_app.urls')),
+    path('api/workouts/', include('fitness_app.urls')),
+    path('api/nutrition/', include('fitness_app.urls')),
+    path('api/social/', include('fitness_app.urls')),
+    path('api/challenges/', include('fitness_app.urls')),
     
     # Documentation
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

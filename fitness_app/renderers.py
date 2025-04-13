@@ -1,6 +1,6 @@
 from rest_framework import renderers
 from rest_framework.utils import json
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from rest_framework import status
 from datetime import datetime
 
@@ -74,12 +74,12 @@ class CustomJSONRenderer(renderers.JSONRenderer):
             
             return {
                 'code': error_code,
-                'message': force_text(message),
+                'message': force_str(message),
                 'details': {k: v for k, v in data.items() if k not in ['code', 'detail', 'message']}
             }
         return {
             'code': str(status_code),
-            'message': force_text(data) if data else "An error occurred",
+            'message': force_str(data) if data else "An error occurred",
             'details': None
         }
 
