@@ -17,8 +17,8 @@ from fitness_app.views.users import (
 from fitness_app.views.workouts import (
     WorkoutPlanListView, WorkoutPlanDetailView,
     WorkoutSessionListView, WorkoutSessionDetailView,
-    WorkoutExerciseCreateView, WorkoutExerciseUpdateView, WorkoutExerciseDestroyView,
-    ExerciseListCreateView,WorkoutMediaCreateView, WorkoutMediaDestroyView
+    WorkoutExerciseCreateView, WorkoutExerciseUpdateView, WorkoutExerciseDestroyView
+    # ExerciseListCreateView,WorkoutMediaCreateView, WorkoutMediaDestroyView
 )
 
 # Nutrition
@@ -80,9 +80,9 @@ urlpatterns = [
     path('workouts/exercises/<int:pk>/', WorkoutExerciseUpdateView.as_view(), name='workout-exercise-update'),
     path('workouts/exercises/<int:pk>/delete/', WorkoutExerciseDestroyView.as_view(), name='workout-exercise-delete'),
   
-    # Exercises CRUD
-    path('workouts/exercises/', ExerciseListCreateView.as_view(), name='exercise-list-create'),
-    path('workouts/exercises/<int:pk>/', ExerciseRetrieveUpdateDestroyView.as_view(), name='exercise-detail-update-delete'),
+    # # Exercises CRUD
+    # path('workouts/exercises/', ExerciseListCreateView.as_view(), name='exercise-list-create'),
+    # path('workouts/exercises/<int:pk>/', ExerciseRetrieveUpdateDestroyView.as_view(), name='exercise-detail-update-delete'),
 
     # ==================== Workout Media ====================
     path('workouts/sessions/<int:workout_id>/media/', WorkoutMediaUploadView.as_view(), name='workout-media-upload'),
