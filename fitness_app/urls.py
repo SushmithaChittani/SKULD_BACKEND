@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
-
+from fitness_app.views.workouts import *
 # Authentication
 from fitness_app.views.auth import (
     UserRegisterView, CustomTokenObtainPairView, UserProfileView
@@ -18,8 +18,7 @@ from fitness_app.views.workouts import (
     WorkoutPlanListView, WorkoutPlanDetailView,
     WorkoutSessionListView, WorkoutSessionDetailView,
     WorkoutExerciseCreateView, WorkoutExerciseUpdateView, WorkoutExerciseDestroyView,
-    ExerciseCreateView,
-    WorkoutMediaCreateView, WorkoutMediaDestroyView
+    ExerciseListCreateView,WorkoutMediaCreateView, WorkoutMediaDestroyView
 )
 
 # Nutrition
@@ -80,7 +79,10 @@ urlpatterns = [
     path('workouts/sessions/<int:workout_id>/exercises/', WorkoutExerciseCreateView.as_view(), name='workout-exercise-create'),
     path('workouts/exercises/<int:pk>/', WorkoutExerciseUpdateView.as_view(), name='workout-exercise-update'),
     path('workouts/exercises/<int:pk>/delete/', WorkoutExerciseDestroyView.as_view(), name='workout-exercise-delete'),
-    path('workouts/exercises/create/', ExerciseCreateView.as_view(), name='exercise-create'),
+  
+    # Exercises CRUD
+    path('workouts/exercises/', ExerciseListCreateView.as_view(), name='exercise-list-create'),
+    path('workouts/exercises/<int:pk>/', ExerciseRetrieveUpdateDestroyView.as_view(), name='exercise-detail-update-delete'),
 
     # ==================== Workout Media ====================
     path('workouts/sessions/<int:workout_id>/media/', WorkoutMediaUploadView.as_view(), name='workout-media-upload'),

@@ -290,12 +290,4 @@ from .models import Exercise
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = [
-            'id',
-            'name',
-            'description',
-            'muscle_group',
-            'equipment',
-            'is_public',
-            'demonstration_video'
-        ]
+        fields = '__all__'
