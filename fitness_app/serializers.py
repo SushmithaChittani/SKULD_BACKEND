@@ -108,8 +108,7 @@ class WorkoutSessionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = WorkoutSession
-        fields = ['id', 'user', 'workout_plan', 'name', 'notes', 'start_time', 'end_time',
-                 'calories_burned', 'points_earned', 'is_completed', 'exercises', 'media_files']
+        fields = '__all__'
         read_only_fields = ['user', 'points_earned', 'is_completed']
 
 class DailyActivitySerializer(serializers.ModelSerializer):
@@ -284,3 +283,19 @@ class LeaderboardSerializer(serializers.ModelSerializer):
         if queryset:
             return list(queryset).index(obj) + 1
         return None
+    
+from rest_framework import serializers
+from .models import Exercise
+
+class ExerciseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Exercise
+        fields = [
+            'id',
+            'name',
+            'description',
+            'muscle_group',
+            'equipment',
+            'is_public',
+            'demonstration_video'
+        ]

@@ -178,12 +178,18 @@ WORKOUT_POINTS_PER_MINUTE = 2
 CHALLENGE_COMPLETION_POINTS = 100
 STREAK_BONUS_POINTS = 50
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/1',
+#     }
+# }
 
 # Cache leaderboards for 1 minutes
 LEADERBOARD_CACHE_TIMEOUT = 60
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#     }
+# }

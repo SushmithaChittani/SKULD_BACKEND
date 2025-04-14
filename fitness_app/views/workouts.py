@@ -4,6 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from ..models import WorkoutPlan, WorkoutSession, WorkoutExercise, WorkoutMedia
 from django.db import models
+from ..models import Exercise
+from ..serializers import ExerciseSerializer
+from rest_framework.permissions import IsAuthenticated
 from ..serializers import (
     WorkoutPlanSerializer, WorkoutSessionSerializer, 
     WorkoutExerciseSerializer, WorkoutMediaSerializer
@@ -99,3 +102,11 @@ class WorkoutMediaDestroyView(generics.DestroyAPIView):
         return WorkoutMedia.objects.filter(
             workout_session__user=self.request.user
         )
+    
+class ExerciseCreateView(generics.CreateAPIView):
+    queryset = Exercise.objects.all()
+    serializer_class = ExerciseSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
