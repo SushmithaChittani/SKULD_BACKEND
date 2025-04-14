@@ -267,3 +267,20 @@ class MealImageSerializer(serializers.ModelSerializer):
         validate_image_extension(value)
         validate_image_size(value)
         return value
+    
+class LeaderboardSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username')
+    name = serializers.CharField(source='user.name')
+    profile_picture = serializers.ImageField(source='user.profile_picture')
+    rank = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserScore
+        fields = ['rank', 'username', 'name', 'profile_picture', 'points', 'workouts_completed']
+    
+    def get_rank(self, obj):
+        # This assumes queryset is already ordered by points
+        queryset = self.context.get('queryset')
+        if queryset:
+            return list(queryset).index(obj) + 1
+        return None

@@ -1,0 +1,308 @@
+2. Authentication Testing
+User Registration
+Request: POST {{base_url}}/auth/register/
+
+Body (raw JSON):
+
+json
+Copy
+{
+    "email": "testuser@example.com",
+    "name": "Test User",
+    "username": "testuser",
+    "password": "Test@1234"
+}
+Expected Results:
+
+Status: 201 Created
+
+Response body should show user details without password
+
+Verify all fields match input
+
+User Login
+Request: POST {{base_url}}/auth/login/
+
+Body:
+
+json
+Copy
+{
+    "email": "testuser@example.com",
+    "password": "Test@1234"
+}
+Expected Results:
+
+Status: 200 OK
+
+Response should contain access and refresh tokens
+
+Save access token to environment variable
+
+Get User Profile
+Request: GET {{base_url}}/auth/profile/
+
+Headers:
+
+Authorization: Bearer {{access_token}}
+
+Expected Results:
+
+Status: 200 OK
+
+Verify all user details are returned correctly
+
+Save user ID to environment
+
+3. User Management Testing
+Get All Users
+Request: GET {{base_url}}/users/
+
+Headers: Add authorization
+
+Expected Results:
+
+Status: 200 OK
+
+Should return list of users
+
+Verify pagination if implemented
+
+Get Single User
+Request: GET {{base_url}}/users/testuser/
+
+Headers: Add authorization
+
+Expected Results:
+
+Status: 200 OK
+
+Verify returned user matches requested username
+
+4. Workout Management Testing
+Create Workout Plan
+Request: POST {{base_url}}/workouts/plans/
+
+Body:
+
+json
+Copy
+{
+    "name": "Beginner Plan",
+    "difficulty": "beginner",
+    "is_public": true
+}
+Expected Results:
+
+Status: 201 Created
+
+Verify all fields are saved correctly
+
+Create Workout Session
+Request: POST {{base_url}}/workouts/sessions/
+
+Body:
+
+json
+Copy
+{
+    "name": "Morning Workout",
+    "start_time": "2023-08-01T09:00:00Z"
+}
+Expected Results:
+
+Status: 201 Created
+
+Save workout_id from response
+
+Verify session is linked to authenticated user
+
+Upload Workout Media
+Request: POST {{base_url}}/workouts/sessions/{{workout_id}}/media/
+
+Body (form-data):
+
+media_type: image
+
+file: Select a JPG image
+
+caption: "My workout photo"
+
+Expected Results:
+
+Status: 201 Created
+
+Verify file URL is returned
+
+Check media_type is correct
+
+5. Nutrition Tracking Testing
+Create Nutrition Log
+Request: POST {{base_url}}/nutrition/logs/
+
+Body:
+
+json
+Copy
+{
+    "meal_type": "breakfast",
+    "name": "Oatmeal",
+    "calories": 300,
+    "protein": 10,
+    "carbs": 50,
+    "fats": 5,
+    "date": "2023-08-01"
+}
+Expected Results:
+
+Status: 201 Created
+
+Verify all nutritional values are saved accurately
+
+Get Today's Nutrition
+Request: GET {{base_url}}/nutrition/logs/today/
+
+Expected Results:
+
+Status: 200 OK
+
+Should return only today's entries
+
+Verify date filtering works
+
+6. Social Features Testing
+Create Post
+Request: POST {{base_url}}/social/posts/
+
+Body:
+
+json
+Copy
+{
+    "content": "My first post!"
+}
+Expected Results:
+
+Status: 201 Created
+
+Save post_id from response
+
+Verify author is authenticated user
+
+Like a Post
+Request: POST {{base_url}}/social/posts/{{post_id}}/like/
+
+Expected Results:
+
+Status: 201 Created
+
+Verify like count increases
+
+Check user can't like same post twice
+
+7. Challenges Testing
+Create Challenge
+Request: POST {{base_url}}/challenges/
+
+Body:
+
+json
+Copy
+{
+    "name": "30-Day Challenge",
+    "target": 30,
+    "target_type": "workouts",
+    "start_date": "2023-08-01",
+    "end_date": "2023-08-30"
+}
+Expected Results:
+
+Status: 201 Created
+
+Save challenge_id from response
+
+Verify creator is authenticated user
+
+Join Challenge
+Request: POST {{base_url}}/challenges/{{challenge_id}}/join/
+
+Expected Results:
+
+Status: 201 Created
+
+Verify user is added to participants
+
+Check progress starts at 0
+
+8. Media Handling Testing
+Upload Profile Picture
+Request: PATCH {{base_url}}/media/profile/picture/
+
+Body (form-data):
+
+profile_picture: Select an image
+
+Expected Results:
+
+Status: 200 OK
+
+Verify image URL is returned
+
+Check old image is replaced
+
+Check Storage Usage
+Request: GET {{base_url}}/media/storage/
+
+Expected Results:
+
+Status: 200 OK
+
+Should show current storage usage
+
+Verify numbers increase after uploads
+
+9. Error Case Testing
+Invalid Registration
+Request: POST {{base_url}}/auth/register/
+
+Body:
+
+json
+Copy
+{
+    "email": "invalid",
+    "password": "123"
+}
+Expected Results:
+
+Status: 400 Bad Request
+
+Should show validation errors for email and password
+
+Unauthorized Access
+Request: GET {{base_url}}/auth/profile/
+
+Don't include Authorization header
+
+Expected Results:
+
+Status: 401 Unauthorized
+
+Clear error message about missing credentials
+
+10. Testing Sequence Recommendation
+Authentication (Register → Login → Profile)
+
+User Management
+
+Workout Plans → Sessions → Exercises → Media
+
+Nutrition Logs
+
+Social Posts → Likes → Comments
+
+Challenges
+
+Media Uploads
+
+Error Cases

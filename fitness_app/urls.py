@@ -8,6 +8,7 @@ from fitness_app.views.nutrition import *
 from fitness_app.views.social import *
 from fitness_app.views.users import *
 from fitness_app.views.workouts import *
+from fitness_app.views.leaderboard import * 
 
 from .views import (
     # Authentication
@@ -42,6 +43,9 @@ from .views import (
     ProgressPhotoUploadView, ProgressPhotoDeleteView,
     PostImageUploadView, MealImageUploadView,
     MediaStorageView,
+
+    #leaderboard
+    GlobalLeaderboardView, ChallengeLeaderboardView
     
     # Activity
 #    DailyActivityListView, DailyActivityDetailView
@@ -113,6 +117,10 @@ urlpatterns = [
     path('media/nutrition-logs/<int:pk>/meal-image/', MealImageUploadView.as_view(), name='meal-image-upload'),
     
     path('media/storage/', MediaStorageView.as_view(), name='media-storage'),
+
+    # ... leaderboard URLs ...
+    path('leaderboard/', GlobalLeaderboardView.as_view(), name='global-leaderboard'),
+    path('challenges/<int:challenge_id>/leaderboard/', ChallengeLeaderboardView.as_view(), name='challenge-leaderboard'),
     
     # ==================== Activity Tracking ====================
     #path('activity/daily/', DailyActivityListView.as_view(), name='daily-activity-list'),

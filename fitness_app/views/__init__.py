@@ -5,3 +5,4 @@ from .nutrition import *
 from .social import *
 from .users import *
 from .workouts import *
+from .leaderboard import *
